@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="group_tree" name="com.sws.model.GroupTree">
+    <comment>组织树</comment>
+    <id unsaved-value="null" name="id">
+      <column name="id">
+        <comment>主键</comment>
+      </column>
+      <generator class="native" >
+      	<param name="sequence">seq_group_tree</param>
+      </generator>
+    </id>
+    <property name="name" type="string">
+      <column name="name" length="60" not-null="true">
+        <comment>名称</comment>
+      </column>
+    </property>
+    <property name="parentId" type="long">
+      <column name="parent_id">
+        <comment>父组织Id</comment>
+      </column>
+    </property>
+    <property name="type" type="integer">
+      <column name="type">
+        <comment>节点类型：1医院，2科室，3病区，4病床</comment>
+      </column>
+    </property>
+    <property name="remark" type="string">
+      <column name="remark" length="1024">
+        <comment>设备编号</comment>
+      </column>
+    </property>
+    <property name="status" update="false" type="long">
+      <column name="status">
+        <comment>状态</comment>
+      </column>
+    </property>
+    <property name="departLevel" type="integer">
+      <column name="depart_level">
+        <comment>部门等级:0表示可看全科室数据,1表示只能看当前科室数据</comment>
+      </column>
+    </property>
+    <property name="creator" update="false" type="string">
+      <column name="creator" length="64">
+        <comment>创建者</comment>
+      </column>
+    </property>
+    <property name="createTime" update="false" type="java.util.Date">
+      <column name="create_time">
+        <comment>创建时间</comment>
+      </column>
+    </property>
+    <property name="updateTime" type="java.util.Date">
+      <column name="update_time">
+        <comment>更新时间</comment>
+      </column>
+    </property>
+  </class>
+</hibernate-mapping>

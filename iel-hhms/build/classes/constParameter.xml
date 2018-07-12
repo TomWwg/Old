@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<types>
+    <type key="deviceInfo">
+       <parameters key="deviceType"> <!-- 设备类型 -->
+            <parameter key="38">无线接入点</parameter>
+            <parameter key="40">智能胸牌</parameter>
+            <parameter key="09">门外发射器</parameter>
+            <parameter key="0a">门内发射器</parameter>
+            <parameter key="10">床信号识别器</parameter>
+            <parameter key="29">液瓶感应器</parameter>
+            <parameter key="18">污染区识别器</parameter>
+            <parameter key="20">无菌区识别器</parameter>
+            <parameter key="2a">水洗区液瓶识别器</parameter>
+            <parameter key="30">水洗区识别器</parameter>
+       </parameters>
+       <parameters key="rfidStatus"> <!-- 正常手卫生-->
+          <!--  <parameter key="0">无定义</parameter> -->
+           <parameter key="1">不清洁</parameter>
+           <parameter key="2">有限清洁</parameter>
+           <parameter key="3">清洁</parameter>
+           <parameter key="4">短时接近患者未手卫生</parameter>
+           <parameter key="5">长时接近患者未手卫生</parameter>
+           <parameter key="6">进入病区未手卫生</parameter>
+           <parameter key="7">离开病区未手卫生</parameter>
+           <parameter key="8">短时接近患者未手卫生</parameter>
+           <parameter key="9">长时接近患者未手卫生</parameter>
+       </parameters>
+<!-- 1
+   1、依从率=有效洗手完成次数0003/(有效洗手完成0003 + 长时接触病床未洗手0021+ 离开病区0008（状态7） +接触病床前未手卫生0103 )
+   2、1）接触前：接触病床前未手卫生0103 2）接触后：长时接触病床未洗手0021+ 离开病区0008（状态7）
+-->
+       <parameters key="eventType"> 
+            <!-- 常规事件-->
+           <parameter key="0001">进入识别区</parameter><!-- 1、2、3污染、水洗、无菌识别区-->
+           <parameter key="0003">手卫生完成</parameter><!-- 0、有效洗手完成：4、5、6、7-->
+           <parameter key="0007">进入病区</parameter><!-- 0、6-->
+           <parameter key="0008">离开病区</parameter><!-- 0、7-->
+           <parameter key="0018">接近患者</parameter><!-- 1、2、3-->
+         <!--   <parameter key="0019">超时接近患者</parameter>2、3 -->
+        <!--    <parameter key="0020">短时接近患者未手卫生</parameter>0
+           <parameter key="0021">长时接近患者未手卫生</parameter>0 -->
+           <!-- <parameter key="0022">短时离开患者未手卫生</parameter>1 -->
+           <parameter key="0110">长时离开患者未手卫生</parameter><!-- 1-->
+           <!-- 异常事件-->
+           <parameter key="0103">接触患者前未手卫生</parameter><!-- 0-->
+     <!--       <parameter key="0104">违规接近洁净物</parameter>0 -->
+          <!--  <parameter key="0108">电池欠压报警</parameter>0
+           <parameter key="0109">电池欠压恢复</parameter>0 -->
+       </parameters>
+       
+    </type>
+    <type key="staffInfo">
+       <parameters key="jobType"> <!-- 类别 -->
+           <parameter key="1">医生</parameter>
+           <parameter key="2">护师</parameter>
+           <parameter key="3">护士</parameter>
+           <parameter key="4">护工</parameter>
+           <parameter key="5">保洁</parameter>
+       </parameters>
+       <parameters key="jobTitle"> <!-- 职称-->
+           <parameter key="1">高级</parameter>
+           <parameter key="2">中级</parameter>
+           <parameter key="3">初级</parameter>
+           <parameter key="4">其他</parameter>
+       </parameters>
+    </type>
+    <type key="hospital">
+       <parameters key="no"> <!-- 医院编号（根据硬件配置）-->
+           <parameter key="3100300000000001">东大医院</parameter>
+           <parameter key="3100300000000002">同德医院</parameter>
+       </parameters>
+    </type>
+</types>

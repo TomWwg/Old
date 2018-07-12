@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<!-- service注入 -->
+	<bean id="deviceInfoService" class="com.sws.service.imp.DeviceInfoServiceImpl" autowire="byName" />
+	<bean id="groupTreeService" class="com.sws.service.imp.GroupTreeServiceImpl" autowire="byName" />
+	<bean id="signalLogService" class="com.sws.service.imp.SignalLogServiceImpl" autowire="byName" />
+	<bean id="staffInfoService" class="com.sws.service.imp.StaffInfoServiceImpl" autowire="byName" />
+	<bean id="washHandLogService" class="com.sws.service.imp.WashHandLogServiceImpl" autowire="byName" />
+	<bean id="userInfoService" class="com.sws.service.imp.UserInfoServiceImpl" autowire="byName" />
+	<bean id="roleInfoService" class="com.sws.service.imp.RoleInfoServiceImpl" autowire="byName" />
+	<bean id="manualRecordService" class="com.sws.service.imp.ManualRecordServiceImpl" autowire="byName" />
+	<bean id="menuInfoService" class="com.sws.service.imp.MenuInfoServiceImpl" autowire="byName" />
+	<bean id="menuRoleService" class="com.sws.service.imp.MenuRoleServiceImpl" autowire="byName" />
+	<bean id="userRoleService" class="com.sws.service.imp.UserRoleServiceImpl" autowire="byName" />
+	<bean id="logInfoService" class="com.sws.service.imp.LogInfoServiceImpl" autowire="byName" />
+	<bean id="noticeInfoService" class="com.sws.service.imp.NoticeInfoServiceImpl" autowire="byName" />
+	<bean id="favoriteInfoService" class="com.sws.service.imp.FavoriteInfoServiceImpl" autowire="byName" />
+	<bean id="socketService" class="com.sws.service.imp.SocketServiceImpl" autowire="byName" />
+	<bean id="appNewsService" class="com.sws.service.imp.AppNewsServiceImpl" autowire="byName" />
+	<bean id="apSetService" class="com.sws.service.imp.ApSetServiceImpl" autowire="byName" />
+	<bean id="parameterInfoService" class="com.sws.service.imp.ParameterInfoServiceImpl" autowire="byName" />
+	<bean id="scheduleService" class="com.sws.service.imp.ScheduleServiceImpl" autowire="byName" />
+	<bean id="dateTemplateService" class="com.sws.service.imp.DateTemplateServiceImpl" autowire="byName" />
+	<bean id="preRateStatisticsService" class="com.sws.service.imp.PreRateStatisticsServiceImpl" autowire="byName"/>
+	<bean id="licenseService" class="com.sws.service.imp.LicenseServiceImpl" autowire="byName"/>
+	<!-- dao注入 -->	
+	<bean id="deviceInfoDao" class="com.sws.dao.imp.DeviceInfoDaoImpl" autowire="byName" />
+	<bean id="groupTreeDao" class="com.sws.dao.imp.GroupTreeDaoImpl" autowire="byName" />
+	<bean id="signalLogDao" class="com.sws.dao.imp.SignalLogDaoImpl" autowire="byName" />
+	<bean id="staffInfoDao" class="com.sws.dao.imp.StaffInfoDaoImpl" autowire="byName" />
+	<bean id="washHandLogDao" class="com.sws.dao.imp.WashHandLogDaoImpl" autowire="byName" />
+	<bean id="userInfoDao" class="com.sws.dao.imp.UserInfoDaoImpl" autowire="byName" />	
+	<bean id="roloInfoDao" class="com.sws.dao.imp.RoleInfoDaoImpl" autowire="byName" />
+	<bean id="menuInfoDao" class="com.sws.dao.imp.ManualRecordDaoImpl" autowire="byName" />
+	<bean id="manualRecordDao" class="com.sws.dao.imp.MenuInfoDaoImpl" autowire="byName" />
+	<bean id="menuRoleDao" class="com.sws.dao.imp.MenuRoleDaoImpl" autowire="byName" />
+	<bean id="userRoleDao" class="com.sws.dao.imp.UserRoleDaoImpl" autowire="byName" />
+	<bean id="logInfoDao" class="com.sws.dao.imp.LogInfoDaoImpl" autowire="byName" />
+	<bean id="noticeInfoDao" class="com.sws.dao.imp.NoticeInfoDaoImpl" autowire="byName" />
+	<bean id="favoriteInfoDao" class="com.sws.dao.imp.FavoriteInfoDaoImpl" autowire="byName" />
+	<bean id="appNewsDao" class="com.sws.dao.imp.AppNewsDaoImpl" autowire="byName" />
+	<bean id="apSetDao" class="com.sws.dao.imp.ApSetDaoImpl" autowire="byName" />
+	<bean id="parameterInfoDao" class="com.sws.dao.imp.ParameterInfoDaoImpl" autowire="byName" />
+	<bean id="scheduletDao" class="com.sws.dao.imp.ScheduleDaoImpl" autowire="byName" />
+	<bean id="dateTemplateDao" class="com.sws.dao.imp.DateTemplateDaoImpl" autowire="byName" />
+	<bean id="preRateStatisticsDao" class="com.sws.dao.imp.PreRateStatisticsDaoImpl" autowire="byName" />
+</beans>

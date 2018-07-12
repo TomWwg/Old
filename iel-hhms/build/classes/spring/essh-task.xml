@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<!-- 任务调度工厂
+	<bean id="schedulerFactory" class="com.sys.core.scheduler.SchedulerFactory"></bean>
+	 -->
+	 <!-- 初始化bean -->
+	 <bean id="preRateStatisticsTask" class="com.sws.task.PreRateStatisticsTask"></bean>
+	<bean id="preRateStatisticsYmTask" class="com.sws.task.PreRateStatisticsYmTask"></bean>
+	 
+	<!-- 启动任务调度程序-->
+	<bean id="preRateStatisticsTaskRun"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"
+		p:targetObject-ref="preRateStatisticsTask" p:targetMethod="run">
+	</bean>
+	<bean id="preRateStatisticsYmTaskRun"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"
+		p:targetObject-ref="preRateStatisticsYmTask" p:targetMethod="run">
+	</bean>
+	
+	  <!-- 配置触发器 -->
+	 <bean id="preRateStatisticsTaskRunTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	 	<property name="jobDetail" ref="preRateStatisticsTaskRun" />
+	 	<property name="cronExpression" value="0 0 1 * * ?" /> <!-- 每天凌晨1点触发一次 -->
+	 </bean>
+	<bean id="preRateStatisticsYmTaskRunTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	 	<property name="jobDetail" ref="preRateStatisticsYmTaskRun" />
+	 	<property name="cronExpression" value="0 0 1 1 * ?" /> <!-- 每月1号凌晨1点触发一次 -->
+	 	
+	 </bean>
+	 
+	 <!-- 配置调度工厂 -->
+	 <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> 
+		<property name="triggers"> 
+			<list> 
+				<ref bean="preRateStatisticsTaskRunTrigger" /> 
+				<ref bean="preRateStatisticsYmTaskRunTrigger" />
+			</list> 
+		</property> 
+	</bean> 
+	<!-- * * * * * *依次是：秒、分、时、月、周-->
+	<!-- 如：* 0 5 * * *|* 8 10 * * *|* 22 17 * * *表示每天的5:00,10:08,17:22时触发定时器 -->
+	<!-- * 0 10-16/2 * * * 表示每天10-16点，间隔2小时触发一次 -->
+	<!-- 0 * */2 * *   表示每两个小时触发一次 -->
+   <!--  <bean id="rfidTask" class="com.sws.task.RfidTask" autowire="byName">
+		<property name="schedulingPattern" value="59 * * * * *"></property>
+	</bean>  -->
+	<!-- <bean id="deviceInfoTask" class="com.sws.task.DeviceInfoTask" autowire="byName">
+		<property name="schedulingPattern" value="0 0 */1 * * *"></property>
+	</bean> --> 
+</beans>

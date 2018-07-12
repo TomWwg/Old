@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="app_news" name="com.sws.model.AppNews">
+    <comment>app新闻</comment>
+    <id unsaved-value="null" name="id">
+      <column name="id">
+        <comment>主键</comment>
+      </column>
+      <generator class="native" >
+      	<param name="sequence">seq_app_news</param>
+      </generator>
+    </id>
+    <property name="title" type="string">
+      <column name="title" length="255" >
+        <comment>标题</comment>
+      </column>
+    </property>
+    <property name="content" type="string">
+      <column name="content" length="5000">
+        <comment>内容</comment>
+      </column>
+    </property>
+    <property name="image"  type="string">
+      <column name="image" length="255">
+        <comment>图片链接</comment>
+      </column>
+    </property>
+    <property name="status" update="false" type="long">
+      <column name="status">
+        <comment>状态</comment>
+      </column>
+    </property>
+    <property name="creator" update="false" type="string">
+      <column name="creator" length="64">
+        <comment>创建者</comment>
+      </column>
+    </property>
+    <property name="createTime" update="false" type="java.util.Date">
+      <column name="create_time">
+        <comment>创建时间</comment>
+      </column>
+    </property>
+    <property name="updateTime" type="java.util.Date">
+      <column name="update_time">
+        <comment>更新时间</comment>
+      </column>
+    </property>
+  </class>
+</hibernate-mapping>

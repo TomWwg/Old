@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<bean id="urlFilter" class="com.gk.essh.www.filter.url.BasicURLFilter"
+		autowire="byName" />
+
+	<bean id="sessionProcessor" class="com.gk.essh.www.session.CacheSessionProcessor"
+		autowire="byName" />
+
+	<bean id="mobileSessionProcessor" class="com.sws.common.MobileSessionProcessor"
+		autowire="byName" />
+
+	<bean id="serviceLocator" class="com.gk.essh.core.ServiceLocator" />
+
+	<bean id="gkMatcher" class="com.gk.essh.util.match.AntPathMatcher"
+		autowire="byName" />
+
+	<bean id="memoryStore" class="com.gk.sws.cache.manager.MemoryStore"
+		autowire="byName" />
+
+	<bean id="dbStore" class="com.gk.sws.cache.manager.MemoryStore"
+		autowire="byName" />
+
+	<bean id="thirdPartyStore" class="com.gk.sws.cache.manager.MemcacheStore"
+		autowire="byName" />
+
+	<bean id="dataManager" class="com.gk.sws.cache.manager.DataManager"
+		autowire="byName" />
+
+	<bean id="localeTextService" class="com.sws.common.LocaleTextService"
+		autowire="byName" />
+	
+	<bean id="licParams" class="com.gk.extend.hibernate.dao.LicParams" autowire="byName" scope="singleton"/>
+			
+	
+
+</beans>

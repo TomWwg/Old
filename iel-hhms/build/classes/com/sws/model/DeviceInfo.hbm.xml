@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="device_info" name="com.sws.model.DeviceInfo">
+    <comment>设备信息表</comment>
+    <id unsaved-value="null" name="id">
+      <column name="id">
+        <comment>主键</comment>
+      </column>
+      <generator class="native" >
+      	<param name="sequence">seq_device_info</param>
+      </generator>
+    </id>
+    <property name="name" type="string">
+      <column name="name" length="60" not-null="false">
+        <comment>设备名称</comment>
+      </column>
+    </property>
+    <property name="no" type="string">
+      <column name="no" length="64" not-null="true">
+        <comment>设备编号</comment>
+      </column>
+    </property>
+    <property name="type" type="string">
+      <column name="type" length="20" not-null="true">
+        <comment>设备类型</comment>
+      </column>
+    </property>
+    <property name="deviceStatus" type="integer">
+      <column name="device_status">
+        <comment>0正常 1未启用 2欠压 3通讯故障</comment>
+      </column>
+    </property>
+    <property name="remark" type="string">
+      <column name="remark" length="1024">
+        <comment>备注</comment>
+      </column>
+    </property>
+    <many-to-one cascade="none" class="com.sws.model.GroupTree" lazy="false" not-null="true" name="groupTree">
+      <column name="group_id">
+        <comment>所属组织</comment>
+      </column>
+    </many-to-one>
+    <property name="departId" type="long">
+      <column name="depart_id">
+        <comment>科室id</comment>
+      </column>
+    </property>
+    <property name="roomId" type="long">
+      <column name="room_id">
+        <comment>病区id</comment>
+      </column>
+    </property>
+    <property name="bedId" type="long">
+      <column name="bed_id">
+        <comment>病床id</comment>
+      </column>
+    </property>
+    <property name="staffId" type="long">
+      <column name="staff_id">
+        <comment>人员id（胸牌用到）</comment>
+      </column>
+    </property>
+    <property name="status" update="false" type="long">
+      <column name="status">
+        <comment>状态</comment>
+      </column>
+    </property>
+    <property name="creator" update="false" type="string">
+      <column name="creator" length="64">
+        <comment>创建者</comment>
+      </column>
+    </property>
+    <property name="createTime" update="false" type="java.util.Date">
+      <column name="create_time">
+        <comment>创建时间</comment>
+      </column>
+    </property>
+    <property name="updateTime" type="java.util.Date">
+      <column name="update_time">
+        <comment>更新时间</comment>
+      </column>
+    </property>
+  </class>
+</hibernate-mapping>

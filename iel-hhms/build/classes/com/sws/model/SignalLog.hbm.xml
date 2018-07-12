@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="signal_log" name="com.sws.model.SignalLog">
+    <comment>手卫生记录表</comment>
+    <id unsaved-value="null" name="id">
+      <column name="id">
+        <comment>主键</comment>
+      </column>
+      <generator class="native" >
+      	<param name="sequence">seq_signal_log</param>
+      </generator>
+    </id>
+    <property name="eventType" type="string">
+      <column name="event_type" length="20" not-null="true">
+        <comment>事件类型</comment>
+      </column>
+    </property>
+    <property name="apNo" type="string">
+      <column name="ap_no" length="20" not-null="true">
+        <comment>ap编号</comment>
+      </column>
+    </property>
+    <property name="deviceNo" type="string">
+      <column name="device_no" length="20" not-null="true">
+        <comment>识别器编号</comment>
+      </column>
+    </property>
+    <property name="deviceType" type="string">
+      <column name="device_type" length="20" not-null="true">
+        <comment>识别器类型</comment>
+      </column>
+    </property>
+    <property name="rfid" type="string">
+      <column name="rfid" length="20" not-null="true">
+        <comment>胸牌编号</comment>
+      </column>
+    </property>
+    <property name="rfidStatus" type="integer">
+      <column name="rfid_status">
+        <comment>0无定义；1不清洁；2有限清洁；3清洁；4短时接近患者；5长时接近患者；6进入病区未手卫生；7离开病区未手卫生</comment>
+      </column>
+    </property>
+    <property name="content" type="string">
+      <column name="content" length="255">
+        <comment>信号日志内容</comment>
+      </column>
+    </property>
+    <property name="postCode" type="string">
+      <column name="post_code" length="20">
+        <comment>邮编编号</comment>
+      </column>
+    </property>
+    <property name="hospitalNo" type="string">
+      <column name="hospital_no" length="20">
+        <comment>医院编号</comment>
+      </column>
+    </property>
+    <property name="departmentNo" type="string">
+      <column name="department_no" length="20">
+        <comment>科室编号</comment>
+      </column>
+    </property>
+    <property name="status" update="false" type="long">
+      <column name="status">
+        <comment>状态</comment>
+      </column>
+    </property>
+    <property name="creator" update="false" type="string">
+      <column name="creator" length="64">
+        <comment>创建者</comment>
+      </column>
+    </property>
+    <property name="createTime" update="false" type="java.util.Date">
+      <column name="create_time">
+        <comment>创建时间</comment>
+      </column>
+    </property>
+    <property name="updateTime" type="java.util.Date">
+      <column name="update_time">
+        <comment>更新时间</comment>
+      </column>
+    </property>
+  </class>
+</hibernate-mapping>

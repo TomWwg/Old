@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-10-17 14:10:12 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.sws.model.ManualRecord" table="manual_record" schema="public">
+        <id unsaved-value="null" name="id">
+      		<column name="id">
+        		<comment>主键</comment>
+     	 	</column>
+     		<generator class="native" >
+      			<param name="sequence">manual_record_id_seq</param>
+      		</generator>
+    	</id>
+        <property name="departId" type="java.lang.Long">
+            <column name="departId">
+                <comment>部门Id</comment>
+            </column>
+        </property>
+        <property name="observerName" type="string">
+            <column name="observerName">
+                <comment>被观察人姓名</comment>
+            </column>
+        </property>
+        <property name="time" type="timestamp">
+            <column name="time" length="29">
+                <comment>手卫生时间</comment>
+            </column>
+        </property>
+        <property name="occassion" type="java.lang.Short">
+            <column name="occassion">
+                <comment>洗手时机（1接触病患前，2接触病患后，3无菌操作前，4接触体液后，5接触患者环境后）</comment>
+            </column>
+        </property>
+        <property name="way" type="java.lang.Short">
+            <column name="way">
+                <comment>洗手方式（1水洗，2手消）</comment>
+            </column>
+        </property>
+        <property name="isRight" type="java.lang.Short">
+            <column name="isRight">
+                <comment>是否正确手卫生（1正确，0不正确）</comment>
+            </column>
+        </property>
+        <property name="roleId" type="java.lang.Long">
+            <column name="roleId">
+                <comment>角色Id</comment>
+            </column>
+        </property>
+        <property name="observerNumber" type="string">
+            <column name="observerNumber">
+                <comment>被观察人工号</comment>
+            </column>
+        </property>
+        <property name="isWashHand" type="java.lang.Short">
+            <column name="isWashHand">
+                <comment>是否洗手（1表示洗手，0表示未洗手）</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

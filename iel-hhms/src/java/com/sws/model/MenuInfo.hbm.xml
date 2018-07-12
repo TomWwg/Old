@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="menu_info" name="com.sws.model.MenuInfo">
+    <comment>角色信息表</comment>
+    <id unsaved-value="null" name="id">
+      <column name="id">
+        <comment>主键</comment>
+      </column>
+      <generator class="native" >
+      	<param name="sequence">seq_menu_info</param>
+      </generator>
+    </id>
+    <property name="name" type="string">
+      <column name="name" length="60" not-null="true">
+        <comment>菜单名</comment>
+      </column>
+    </property>
+    <property name="parentId" type="long">
+      <column name="parent_id">
+        <comment>父菜单Id</comment>
+      </column>
+    </property>
+    <property name="href" type="string">
+      <column name="href" length="60" not-null="true">
+        <comment>链接地址</comment>
+      </column>
+    </property>
+     <property name="active" type="integer">
+      <column name="active">
+        <comment>是否选中 1为选中 0为未选中</comment>
+      </column>
+    </property>
+     <property name="openType" type="integer">
+      <column name="open_type">
+        <comment>...</comment>
+      </column>
+    </property>
+    <property name="css" type="string">
+      <column name="css" length="60">
+        <comment>样式</comment>
+      </column>
+    </property>
+    <property name="baseUrl" type="string">
+      <column name="base_url" length="60">
+        <comment>地址</comment>
+      </column>
+    </property>
+    <property name="img" type="string">
+      <column name="img" length="60">
+        <comment>样式图片</comment>
+      </column>
+    </property>
+    <property name="type" type="integer">
+      <column name="type">
+        <comment>菜单类型</comment>
+      </column>
+    </property>
+    <property name="status" update="false" type="long">
+      <column name="status">
+        <comment>状态</comment>
+      </column>
+    </property>
+    <property name="creator" update="false" type="string">
+      <column name="creator" length="64">
+        <comment>创建者</comment>
+      </column>
+    </property>
+    <property name="createTime" update="false" type="java.util.Date">
+      <column name="create_time">
+        <comment>创建时间</comment>
+      </column>
+    </property>
+    <property name="updateTime" type="java.util.Date">
+      <column name="update_time">
+        <comment>更新时间</comment>
+      </column>
+    </property>
+  </class>
+</hibernate-mapping>

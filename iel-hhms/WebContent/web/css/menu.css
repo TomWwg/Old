@@ -1,0 +1,167 @@
+@charset "utf-8";
+
+
+/******* 左侧子菜单样式 *********/
+.menu_list{
+	margin:0px;
+	width:200px;
+	}
+/* 一级菜单*/
+.menu_head{
+	width:200px;height:47px;
+	margin-left:38px;margin-right:38px;
+	line-height:48px;
+	font-weight:normal;
+	font-size:17px;
+	color:#222222;
+	cursor:pointer;
+	border:1px solid #F5F5F5;
+	border-top:1px solid #aaaaaa;
+	position:relative;
+	background:#F5F5F5;
+	margin:0;
+	text-align: center;
+	box-shadow:-3px 0px 1px #cccccc,
+				0px -1px 1px #cccccc,
+				0px 3px 9px #cccccc,
+				0px 0px 9px #cccccc;	
+	}
+	
+.li_menu_ent{float:left;margin-left: 12px;margin-top: 4px}
+.li_down{float:right;margin-right: 12px;margin-top: 5px}
+
+.menu_list .current{
+	background:#F5F5F5;
+	}
+.menu_body{width:200px;height:auto;overflow:hidden;font-weight:bold;font-size:14px;line-height:38px;border-left:1px solid #F5F5F5;backguound:#369bfd;border-right:1px solid #F5F5F5;}
+/* 二级菜单主体 a标签 */
+.menu_body a{
+	display:block;
+	width:200px;height:38px;
+	line-height:38px;
+	font-size:16px;
+	color:#FFFFFF;
+	font-weight:normal;
+	text-decoration:none;
+	border-bottom:1px solid #BBBBBB;
+	text-align: center;
+	}
+.menu_body a:hover{text-decoration:none;}
+/*选中层前部标记*/
+.color_env_light{
+	display: block;
+	background: #ff8a0b;
+	height:38px;width:6px;float:left
+	}
+/* 选中层 */
+.color_env_light_bg{
+	background: #0776A0;
+	}
+.color_env_light_bg a{
+	color:#333333;
+	}
+
+.li_menu_highlevel a{
+	color:black;
+	 text-decoration:none;
+}
+/*二级菜单整体*/
+.menu_body{
+	background:#F5F5F5;
+}
+
+
+.li_menu_highlevel_a{display:block;width:200px;height:38px;line-height:38px;font-size:18px;color:#020202;text-decoration:none;border-bottom:1px solid #F5F5F5;text-align: center;}
+.li_menu_highlevel_a{text-decoration:none;}
+
+/* 
+
+****** 左侧子菜单样式 ********
+.menu_list{
+	margin:0px;
+	width:200px;
+	}
+	主菜单样式
+.menu_head{
+	width:200px;height:47px;
+	margin-left:38px;margin-right:38px;
+	line-height:47px;
+	font-weight:normal;
+	font-size:18px;
+	color:#333333;
+	cursor:pointer;
+	border:1px solid #F5F5F5;
+	border-top:1px solid #aaaaaa;
+	position:relative;
+	background:#F5F5F5;
+	margin:0;
+	text-align: center;
+	box-shadow:-3px 0px 9px #cccccc,
+				0px -3px 9px #cccccc,
+				0px 3px 9px #cccccc,
+				0px 0px 9px #aaaaaa;	
+	}
+.li_menu_ent{float:left;margin-left: 12px;margin-top: 4px}
+.li_down{float:right;margin-right: 12px;margin-top: 5px}
+主菜单背景
+.menu_list .current{
+	background:#F5F5F5;
+	}
+
+.menu_body{
+	width:200px;
+	height:auto;
+	overflow:hidden;
+	font-weight:bold;
+	font-size:14px;
+	line-height:38px;
+	border-left:1px solid #F5F5F5;
+	backguound:#369bfd;
+	border-right:1px solid #F5F5F5;
+	}
+
+	子菜单中的 a 标签
+.menu_body a{
+	display:block;
+	width:200px;height:38px;
+	line-height:38px;
+	font-size:16px;
+	font-weight:normal;
+	color:#ffffff;
+	text-decoration:none;
+	border-bottom:1px solid #F5F5F5;
+	text-align: center;
+	}
+.menu_body a:hover{
+	text-decoration:none;
+	}
+.menu_body{
+	background:#3995B9;
+}
+标识小标签
+.color_env_light{
+	height:38px;width:6px;float:left
+	display: block;
+	background: #ff8a0b;
+	}
+子标签选中的标识
+.color_env_light_bg{
+	background: #aa3995B9;
+	}
+
+.li_menu_highlevel a{
+	color:black;
+	 text-decoration:none;
+}
+
+.li_menu_highlevel_a{
+	display:block;
+	width:200px;height:38px;
+	line-height:38px;font-size:18px;
+	color:#020202;
+	text-decoration:none;
+	border-bottom:1px solid #F5F5F5;
+	text-align: center;
+	}
+.li_menu_highlevel_a{text-decoration:none;}
+ */

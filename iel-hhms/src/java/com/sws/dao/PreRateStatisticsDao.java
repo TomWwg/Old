@@ -1,0 +1,1 @@
+package com.sws.dao;import java.util.List;import com.gk.extend.hibernate.dao.IEntityDao;import com.gk.extend.hibernate.entity.QueryEntity;import com.sws.model.PreRateStatistics;public interface PreRateStatisticsDao extends IEntityDao<PreRateStatistics> {	public List<PreRateStatistics> queryList(QueryEntity queryEntity);}

@@ -1,0 +1,174 @@
+@charset "utf-8";
+/* CSS Document */
+html {
+	width: 100%;
+	height: 100%;
+	overflow:hidden;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	font-size: 12px;
+	margin:0;
+	padding:0;
+	font-family: Arial, Helvetica, sans-serif, "Microsoft YaHei";
+	color: #444;
+    min-width: 1024px;
+}
+
+a:link {color:#FF0000; text-decoration: none}		/* 未被访问的链接 */
+a:visited {color:#00FF00; text-decoration: none}	/* 已被访问的链接 */
+a:hover {color:#FF00FF;}	/* 鼠标指针移动到链接上 */
+a:active {color:#0000FF; text-decoration: none}	/* 正在被点击的链接 */
+
+ul,li {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.pr{position:relative;}
+
+.clearfix {
+	*zoom:1;
+}
+.clearfix:after,
+.clearfix:before {
+	display:block; 
+	content:""; 
+	height:0; 
+	clear:both; 
+	overflow:hidden; 
+	visibility:hidden;
+}
+.bgiframe{
+	opacity:0;
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+}
+.w280{
+	width:280px;	
+}
+.oauto{
+	overflow:auto;
+}
+
+
+/*---------------头部主菜单样式模块-------------*/
+.header_bg {
+    height: 68px;
+    background: #3cbcf4;
+    border-bottom: 2px solid #dceeff;
+}
+
+.top {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.platform-id {
+    margin-left: 60px;
+    line-height: 50px;
+    padding-top: 10px;
+}
+.platform-id span {
+    height: 25px;
+    line-height: 25px;
+    display: block;
+    color: #fff;
+}
+
+.font18 {
+    font-family: "Microsoft YaHei";
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.user-login {
+    float:right;
+    height: 36px;
+    border-left: 1px solid #fff;
+    padding-left: 12px;
+    margin-top: 16px;
+}
+
+.content {
+    width: 1000px;
+    margin:0 auto;
+    position: relative;
+}
+
+.about-box {
+    width: 450px;
+    height: 150px;
+    left: 140px;
+    top: 60px;
+    position: absolute;
+    color: #999;
+    line-height: 22px;
+    font-size: 14px;
+}
+
+.twocode {
+    left: 140px;
+    top: 220px;
+    position: absolute;
+    width: 300px;
+    height: 200px;
+}
+
+.twocode li {
+    width: 128px;
+    height: 170px;
+    float: left;
+    margin-right: 12px;
+}
+
+
+
+.m12 {
+    margin: 12px 0;
+}
+
+.app-bussine {
+    background: #f8f8f8;
+    border-top:1px solid #eee;
+    height: 620px;
+}
+
+.app-bussine .bussine-title span {
+    display: block;
+    font-size: 14px;
+    padding-left: 30px;
+    line-height: 42px;
+    font-weight: bold;
+}
+
+.app-bussine .listbox {
+    margin: 14px auto;
+    width: 1000px;
+}
+
+.app-bussine .listbox li {
+    float: left;
+    width: 102px;
+    margin-left: 20px;
+}
+
+.app-bussine .listbox li a {
+}
+
+.app-bussine .listbox li a span {
+    text-align: center;
+    line-height: 24px;
+    display: block;
+    color: #666;
+}
+
+.footer {
+    border-top:1px solid #eee;
+    text-align: center;
+    line-height: 36px;
+    color: #999;
+    margin-top: 170px;
+}

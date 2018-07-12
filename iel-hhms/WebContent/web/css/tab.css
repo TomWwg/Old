@@ -1,0 +1,47 @@
+ul,li {
+	margin: 0;
+	padding: 0 10px;
+	list-style: none;
+}
+div.contentin {
+	display: block;
+}
+.tab {
+    height: 56px;
+}
+#tab li {
+	display: inline;
+    padding: 0; 
+    width: 100px;
+    height: 56px;
+    float: left;
+    overflow: hidden;
+    display: inline;
+    cursor: pointer;
+   /*  background-position: -34px -184px; */
+    margin-right: 23px;
+    font-size: 16px;
+    font-family: 微软雅黑;
+    text-align: center;
+    color: #444444;
+    line-height:50px;
+}
+.tab li:hover
+{ 
+	color: #369bfd;
+}
+.tab li.cur {    
+    color: #369bfd;
+    border-bottom: 3px solid #369bfd;
+    font-weight: bold;
+}
+#tab li.tabin {
+	color: #369bfd;
+    border-bottom: 3px solid #369bfd;
+    font-weight: bold;
+}
+#contents {
+	clear: left;
+	position: relative;
+	top: -1px;
+}

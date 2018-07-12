@@ -1,0 +1,7 @@
+/*首页的分栏样式追加控制*/
+.block {
+	margin-top: 10px;
+    margin-bottom: 2px;
+    box-shadow: 1px -1px 9px #cccccc;
+    background: white;
+}

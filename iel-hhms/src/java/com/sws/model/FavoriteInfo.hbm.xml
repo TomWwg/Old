@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="favorite_info" name="com.sws.model.FavoriteInfo">
+    <comment>收藏夹</comment>
+    <id unsaved-value="null" name="id">
+      <column name="id">
+        <comment>主键</comment>
+      </column>
+      <generator class="native" >
+      	<param name="sequence">seq_favorite_info</param>
+      </generator>
+    </id>
+    <property name="name" type="string">
+      <column name="name" length="60" not-null="true">
+        <comment>名称</comment>
+      </column>
+    </property>
+    <property name="href" type="string">
+      <column name="href" length="60" not-null="true">
+        <comment>链接地址</comment>
+      </column>
+    </property>
+    <property name="imgUrl" type="string">
+      <column name="img_url" length="60" not-null="true">
+        <comment>图标url</comment>
+      </column>
+    </property>
+    <property name="status" update="false" type="long">
+      <column name="status">
+        <comment>状态</comment>
+      </column>
+    </property>
+    <property name="creator" update="false" type="string">
+      <column name="creator" length="64">
+        <comment>创建者</comment>
+      </column>
+    </property>
+    <property name="createTime" update="false" type="java.util.Date">
+      <column name="create_time">
+        <comment>创建时间</comment>
+      </column>
+    </property>
+    <property name="updateTime" type="java.util.Date">
+      <column name="update_time">
+        <comment>更新时间</comment>
+      </column>
+    </property>
+  </class>
+</hibernate-mapping>

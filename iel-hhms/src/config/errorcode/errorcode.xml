@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<log>
+	<global>
+		<default>
+			<exception id="otherexception" code="1" name="程序运行异常" />
+			<exception id="database" code="2" name="数据库异常" />
+			<exception id="memcached" code="3" name="memcached缓存服务器连接异常" />
+			<exception id="nologin" code="5" name="用户未登陆" />
+			<exception id="noauth" code="6" name="无菜单访问权限" />
+		</default>
+		<programexception>
+			<exception id="AccessDeniedException" code="51" name="没有权限" />
+		</programexception>
+
+	</global>
+
+	<business id="com.gk.sys.user.action.LoginAction"
+		code="10" name="用户登录" logLevel="DEBUG" isbatch="true">
+		<module code="100" name="登录">
+			<method id="login" code="1000" name="登录" logLevel="IGNORE" />
+		</module>
+	</business>
+
+	<business
+		id="com.gk.framework.module.constant.action.ConstantAction"
+		code="38" name="数据字典" logLevel="DEBUG" isbatch="true">
+		<module code="7" name="系统配置">
+			<method id="index" code="1901" name="进入数据字典" logLevel="IGNORE" />
+			<method id="list" code="1902" name="分页查询数据字典" logLevel="IGNORE" />
+			<method id="search" code="1903" name="过滤查询数据字典" logLevel="IGNORE" />
+			<method id="goAddPage" code="1904" name="进入添加数据字典页面" logLevel="IGNORE" />
+			<method id="goModifyPage" code="1905" name="进入修改数据字典页面"
+				logLevel="IGNORE" />
+			<method id="goImportPage" code="1906" name="进入导入数据字典页面"
+				logLevel="IGNORE" />
+			<method id="goSuccessPage" code="1907" name="进入操作成功页面"
+				logLevel="IGNORE" />
+			<method id="goModifySuccessPage" code="1908" name="进入修改成功页面"
+				logLevel="IGNORE" />
+			<method id="addConstant" code="1909" name="添加数据字典" />
+			<method id="updateConstant" code="1910" name="修改数据字典" />
+			<method id="removeConstant" code="1911" name="删除数据字典" />
+			<method id="disableConstant" code="1912" name="禁用数据字典" />
+			<method id="enableConstant" code="1913" name="启用数据字典" />
+			<method id="importConstantByExcel" code="1914" name="通过excel批量导入数据字典" />
+			<method id="exportConstant" code="1915" name="导出数据字典到excel文件" />
+		</module>
+	</business>
+</log>

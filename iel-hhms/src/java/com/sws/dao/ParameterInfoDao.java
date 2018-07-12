@@ -1,0 +1,1 @@
+package com.sws.dao;import java.util.List;import com.gk.extend.hibernate.dao.IEntityDao;import com.sws.model.ParameterInfo;public interface ParameterInfoDao extends IEntityDao<ParameterInfo> {	public ParameterInfo findByTypeAndKey(Integer type, String key);	public List<ParameterInfo> findByType(Integer type);	}

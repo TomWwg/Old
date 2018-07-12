@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-11-3 15:11:25 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.sws.model.Hospital" table="hospital" schema="public">
+        <id unsaved-value="null" name="id">
+      		<column name="id">
+        		<comment>主键</comment>
+     	 	</column>
+     		<generator class="native" >
+      			<param name="sequence">hospital_id_seq</param>
+      		</generator>
+    	</id>
+        <property name="number" type="java.lang.Integer">
+            <column name="number">
+                <comment>&#210;&#189;&#212;&#186;&#177;&#224;&#186;&#197;</comment>
+            </column>
+        </property>
+        <property name="name" type="string">
+            <column name="name">
+                <comment>&#210;&#189;&#212;&#186;&#195;&#251;&#179;&#198;</comment>
+            </column>
+        </property>
+        <property name="address" type="string">
+            <column name="address">
+                <comment>&#181;&#216;&#214;&#183;</comment>
+            </column>
+        </property>
+        <property name="remark" type="string">
+            <column name="remark">
+                <comment>&#177;&#184;&#215;&#162;</comment>
+            </column>
+        </property>
+        <property name="createTime" type="date">
+            <column name="create_time" length="13">
+                <comment>&#180;&#180;&#189;&#168;&#202;&#177;&#188;&#228;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

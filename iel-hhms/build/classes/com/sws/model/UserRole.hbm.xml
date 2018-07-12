@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="user_role" name="com.sws.model.UserRole">
+    <comment>用户角色表</comment>
+    <id unsaved-value="null" name="id">
+      <column name="id">
+        <comment>主键</comment>
+      </column>
+      <generator class="native" >
+      	<param name="sequence">seq_user_role</param>
+      </generator>
+    </id>
+     <many-to-one cascade="none" class="com.sws.model.UserInfo" lazy="false" not-null="true" name="userInfo">
+      <column name="user_id">
+        <comment>用户Id</comment>
+      </column>
+    </many-to-one>
+     <many-to-one cascade="none" class="com.sws.model.RoleInfo" lazy="false" not-null="true" name="roleInfo">
+      <column name="role_id">
+        <comment>角色Id</comment>
+      </column>
+    </many-to-one>
+    <property name="status" update="false" type="long">
+      <column name="status">
+        <comment>状态</comment>
+      </column>
+    </property>
+    <property name="creator" update="false" type="string">
+      <column name="creator" length="64">
+        <comment>创建者</comment>
+      </column>
+    </property>
+    <property name="createTime" update="false" type="java.util.Date">
+      <column name="create_time">
+        <comment>创建时间</comment>
+      </column>
+    </property>
+    <property name="updateTime" type="java.util.Date">
+      <column name="update_time">
+        <comment>更新时间</comment>
+      </column>
+    </property>
+  </class>
+</hibernate-mapping>
