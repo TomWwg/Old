@@ -455,4 +455,43 @@ public class WashHandLogServiceImpl implements WashHandLogService {
 		return counts;
 	}
 	
+	@Override
+	public List<Integer> findNumberByDateAndDepartmentId(QueryEntity queryEntity) {
+		List<Integer> counts = new ArrayList<Integer>();
+		List<WashHandLog> washHandLogs = washHandLogDao.findByTimeAndDepartment(queryEntity);
+		Date startDate = queryEntity.getStartTime();
+		//对开始时间取整
+		String startStr = DateUtils.dateToString(startDate);
+		//将String类型的时间转回Date
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			startDate = sf.parse(startStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		Date endDate = queryEntity.getEndTime();
+		int days = DateUtils.daysOfTwo(startDate, endDate);
+		//days+1是因为要显示多一天的
+		for (int i = 0; i < days + 1; i++) {
+			int count = 0;
+			for (int j = 0; j < washHandLogs.size(); j++) {
+				WashHandLog washHandLog = washHandLogs.get(j);
+				//数据库中的事件时间
+				Date dateEvent = washHandLog.getUpdateTime();
+			    Calendar calendar = new GregorianCalendar(); 
+			    calendar.setTime(startDate);
+			    //把日期往后增加i天.整数往后推,负数往前移动
+			    calendar.add(calendar.DATE, i);
+			    Date dateAddOneBefore = calendar.getTime();
+			    calendar.add(calendar.DATE, 1); 
+			    Date dateAddOne = calendar.getTime();
+				if(dateEvent.before(dateAddOne) && dateEvent.after(dateAddOneBefore)){
+					count++;
+				}
+			}
+			counts.add(count);
+		}
+		return counts;
+	}
+	
 }

@@ -94,5 +94,12 @@ public interface WashHandLogService {
 	 * @return
 	 */
 	List<Integer> findNumberByDate(QueryEntity queryEntity);
+	
+	/**
+	 * 通过时间和部门Id查询近7天医院的手卫生次数
+	 * @param queryEntity
+	 * @return
+	 */
+	List<Integer> findNumberByDateAndDepartmentId(QueryEntity queryEntity);
 
 }

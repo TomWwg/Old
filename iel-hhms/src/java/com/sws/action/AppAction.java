@@ -2044,7 +2044,7 @@ public class AppAction extends BaseAction<DeviceInfo>{
 			String name = groupTreeService.getHospitalName();
 			os.setName(name);
 			//type为1 的是人员类别，此处查询出所有的人员类别
-			List<ParameterInfo> parameterList =  parameterInfoDao.findBy("type", 1);
+			List<ParameterInfo> parameterList =  parameterInfoDao.findByType(1);
 			List<OrganisationStatistic.RoleTimes> roleTimes = new ArrayList<OrganisationStatistic.RoleTimes>();
 			for(int i = 0, length = parameterList.size(); i < length; i++) {
 				OrganisationStatistic.RoleTimes roTimes = os.new RoleTimes();
@@ -2056,6 +2056,9 @@ public class AppAction extends BaseAction<DeviceInfo>{
 				for(int j=0; j<staffs.size(); j++) {
 					Long id = staffs.get(j).getId();
 					staffIds.add(id);
+				}
+				if(staffIds.size() == 0) {
+					continue;
 				}
 				List<DeviceInfo> deviceInfos = deviceInfoDao.findByStaffId(staffIds);
 				List<String> rfids = new ArrayList<String>();
@@ -2098,21 +2101,30 @@ public class AppAction extends BaseAction<DeviceInfo>{
 			//查询该科室在该时间段内的手卫生数据
 			List<WashHandLog> washHandLogs = washHandLogService.findByTimeAndDepartment(queryEntity);
 			//规定时间内该科室的所有手卫生事件的次数
-			int totalTimes = washHandLogs.size();
+			int totalTimes = 0;
+			if(washHandLogs != null) {
+				totalTimes = washHandLogs.size();
+			}
 			os.setTotalTimes(totalTimes);
 			//科室名称
 			String name = groupTreeService.getNameById(Long.parseLong(departmentId));
 			os.setName(name);
 			//type为1 的是人员类别，此处查询出所有的人员类别
-			List<ParameterInfo> parameterList =  parameterInfoDao.findBy("type", 1);
+			List<ParameterInfo> parameterList = parameterInfoDao.findByType(1);
 			List<OrganisationStatistic.RoleTimes> roleTimes = new ArrayList<OrganisationStatistic.RoleTimes>();
 			for(int i = 0, length = parameterList.size(); i < length; i++) {
 				OrganisationStatistic.RoleTimes roTimes = os.new RoleTimes();
 				List<StaffInfo> staffs = staffInfoDao.findStaffIdByCategory(parameterList.get(i).getKey());
 				List<Long> staffIds = new ArrayList<Long>();
+				if(staffs.size() == 0) {
+					continue;
+				}
 				for(int j=0; j<staffs.size(); j++) {
 					Long id = staffs.get(j).getId();
 					staffIds.add(id);
+				}
+				if(staffIds.size() == 0) {
+					continue;
 				}
 				List<DeviceInfo> deviceInfos = deviceInfoDao.findByStaffId(staffIds);
 				List<String> rfids = new ArrayList<String>();
@@ -2134,11 +2146,11 @@ public class AppAction extends BaseAction<DeviceInfo>{
 			os.setRoleTimes(roleTimes);
 			//一周执行次数
 			List<OrganisationStatistic.WeekTimes> weekTimes = new ArrayList<OrganisationStatistic.WeekTimes>();
-			OrganisationStatistic.WeekTimes weTimes = os.new WeekTimes();
-			List<Integer> weekCounts = washHandLogService.findNumberByDate(queryEntity);
+			List<Integer> weekCounts = washHandLogService.findNumberByDateAndDepartmentId(queryEntity);
 			//前七天的日期
 			ArrayList<String> dateList = DateUtils.getPastNDate(7);
 			for(int i = 0; i < 7; i++) {
+				OrganisationStatistic.WeekTimes weTimes = os.new WeekTimes();
 				weTimes.setDay(dateList.get(i));
 				weTimes.setTimes(weekCounts.get(i));
 				weekTimes.add(weTimes);
@@ -2154,7 +2166,6 @@ public class AppAction extends BaseAction<DeviceInfo>{
 	public void getDepartmentCounts() {
 		List<DepartmentStatistic> departmentStatistics = new ArrayList<DepartmentStatistic>();
 		List<GroupTree> groupTrees = groupTreeService.getDepart();
-		System.out.println("groupTrees is: "+groupTrees);
 		for(int i = 0, length = groupTrees.size(); i < length; i++) {
 			DepartmentStatistic departmentStatistic = new DepartmentStatistic();
 			departmentStatistic.setId(groupTrees.get(i).getId());
@@ -2201,7 +2212,7 @@ public class AppAction extends BaseAction<DeviceInfo>{
 			devicePosition.put(deviceList.get(i).getNo(), deviceList.get(i).getName());
 		}
 		//得到所有的人员类别
-		List<ParameterInfo> parameterList = parameterInfoDao.findBy("type", 1);
+		List<ParameterInfo> parameterList = parameterInfoDao.findByType(1);
 		Map<String, String> parameterMap = new HashMap<String, String>();
 		for(int i = 0, length = parameterList.size(); i < length; i++) {
 			parameterMap.put(parameterList.get(i).getKey(), parameterList.get(i).getValue());
@@ -2296,6 +2307,13 @@ public class AppAction extends BaseAction<DeviceInfo>{
 		}
 		JSONObject obj = new JSONObject();
 		obj.put("result", staffStatistics);
+		writeResponse(obj.toString());
+	}
+	
+	public void getDepartmentsForWebApp() {
+		List<GroupTree> groupTrees = groupTreeService.getDepart();
+		JSONObject obj = new JSONObject();
+		obj.put("result", groupTrees);
 		writeResponse(obj.toString());
 	}
 	

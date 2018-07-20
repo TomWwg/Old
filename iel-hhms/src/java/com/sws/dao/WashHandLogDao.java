@@ -66,4 +66,5 @@ public interface WashHandLogDao extends IEntityDao<WashHandLog> {
 	 * @return
 	 */
 	public List<WashHandLog> findWashHandLogsByTime(QueryEntity queryEntity);
+	
 }

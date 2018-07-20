@@ -65,11 +65,8 @@ public class GroupTreeDaoImpl extends HibernateEntityDao<GroupTree> implements G
 	
 	@Override
 	public String getHospitalName() {
-		DetachedCriteria criteria = DetachedCriteria.forClass(GroupTree.class);
-		criteria.add(Restrictions.eq("parentId", 0L));
-//		String hql = "select name from GroupTree where parentId=0";
-//		String name = getHibernateTemplate().find(hql).toString();
-		String name = findByDetachedCriteria(criteria).get(0).getName();
+		String hql = "select name from GroupTree where parentId=0";
+		String name = getHibernateTemplate().find(hql).toString();
 		return name;
 	}
 	
