@@ -59,4 +59,11 @@ public interface WashHandLogDao extends IEntityDao<WashHandLog> {
 	 * @return
 	 */
 	public List<WashHandLog> findLogsNotWashHangBeforeClosingPatient(QueryEntity queryEntity);
+	
+	/**
+	 * 查找时间段内对应的手卫生事件
+	 * @param queryEntity
+	 * @return
+	 */
+	public List<WashHandLog> findWashHandLogsByTime(QueryEntity queryEntity);
 }

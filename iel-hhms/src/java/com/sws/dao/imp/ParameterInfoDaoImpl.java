@@ -36,7 +36,6 @@ public class ParameterInfoDaoImpl extends HibernateEntityDao<ParameterInfo> impl
 
 	@Override
 	public List<ParameterInfo> findByType(Integer type) {
-		// TODO Auto-generated method stub
 		DetachedCriteria criteria = DetachedCriteria.forClass(ParameterInfo.class);
 		if(type!=null){
 			criteria.add(Restrictions.eq("type",type));

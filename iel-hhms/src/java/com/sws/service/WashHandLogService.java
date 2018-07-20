@@ -80,5 +80,19 @@ public interface WashHandLogService {
 	 * @return
 	 */
 	public int findLogsNotWashHangBeforeClosingPatient(QueryEntity queryEntity);
+	
+	/**
+	 * 通过时间来查找符合条件的手卫生事件
+	 * @param queryEntity
+	 * @return
+	 */
+	public List<WashHandLog> findWashHandLogsByTime(QueryEntity queryEntity);
+	
+	/**
+	 * 通过时间查询近7天医院的手卫生次数
+	 * @param queryEntity
+	 * @return
+	 */
+	List<Integer> findNumberByDate(QueryEntity queryEntity);
 
 }

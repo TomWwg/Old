@@ -258,5 +258,15 @@ public class CopyOfWashHandLogServiceImpl implements WashHandLogService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	@Override
+	public List<WashHandLog> findWashHandLogsByTime(QueryEntity queryEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Integer> findNumberByDate(QueryEntity queryEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
 }

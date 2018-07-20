@@ -42,4 +42,11 @@ public interface DeviceInfoDao extends IEntityDao<DeviceInfo> {
 	 * @author wwg
 	 */
 	List<DeviceInfo> findByStaffId(List<Long> staffIds);
+
+	/**
+	 * 通过category查询对应的RFID
+	 * @param category
+	 * @return
+	 */
+	List<String> getRFIDByStaffIds(List<Long> staffIds);
 }

@@ -20,7 +20,6 @@ public class StaffInfoDaoImpl extends HibernateEntityDao<StaffInfo> implements S
 	private static final long serialVersionUID = 1L;
 	@Override
 	public List<StaffInfo> findByDepartAndType(String departIds,Long departId,List<String> types) {
-		// TODO Auto-generated method stub
 		List<Long> ids = new ArrayList<Long>();
 		String[] array = departIds.split("\\*");
 		DetachedCriteria criteria = DetachedCriteria.forClass(StaffInfo.class);
@@ -214,6 +213,23 @@ public class StaffInfoDaoImpl extends HibernateEntityDao<StaffInfo> implements S
 		List<StaffInfo> staffInfos = null;
 		String hql = "from StaffInfo where category = '" + category + "' and groupTree = '" + departmentId +"'";
 		staffInfos = getHibernateTemplate().find(hql);
+		return staffInfos;
+	}
+	
+	@Override
+	public List<StaffInfo> findByGroupId(Long groupId) {
+		DetachedCriteria criteria = DetachedCriteria.forClass(StaffInfo.class);
+		criteria.add(Restrictions.eq("groupTree.id", groupId));
+		List<StaffInfo> staffInfos = findByDetachedCriteria(criteria);
+		return staffInfos;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<StaffInfo> findStaffIdByCategory(String category) {
+		DetachedCriteria criteria = DetachedCriteria.forClass(StaffInfo.class);
+		criteria.add(Restrictions.eq("category", category));
+		List<StaffInfo> staffInfos = findByDetachedCriteria(criteria);
 		return staffInfos;
 	}
 }

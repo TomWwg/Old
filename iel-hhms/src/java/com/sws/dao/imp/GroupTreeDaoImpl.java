@@ -65,4 +65,21 @@ public class GroupTreeDaoImpl extends HibernateEntityDao<GroupTree> implements G
 		}
 		return manageDeparts;
 	}
+	
+	@Override
+	public String getHospitalName() {
+		DetachedCriteria criteria = DetachedCriteria.forClass(GroupTree.class);
+		//parentId=0表示是医院
+		criteria.add(Restrictions.eq("parentId", 0L));
+		String name = findByDetachedCriteria(criteria).get(0).getName();
+		return name;
+	}
+	
+	@Override
+	public String getNameById(Long id) {
+		DetachedCriteria criteria = DetachedCriteria.forClass(GroupTree.class);
+		criteria.add(Restrictions.eq("id", id));
+		List<GroupTree> groupTrees = findByDetachedCriteria(criteria);
+		return groupTrees.get(0).getName();
+	}
 }

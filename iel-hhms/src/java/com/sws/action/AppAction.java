@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -22,11 +23,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.essh.util.tree.TreeNode;
 import com.gk.essh.www.session.GkWebSession;
+import com.gk.extend.hibernate.entity.QueryEntity;
 import com.sws.common.baseAction.BaseAction;
 import com.sws.common.entity.AllManualResults;
 import com.sws.common.entity.DepartInfo;
+import com.sws.common.entity.DepartmentStatistic;
 import com.sws.common.entity.EventCompare;
+import com.sws.common.entity.OrganisationStatistic;
 import com.sws.common.entity.StaffEntity;
+import com.sws.common.entity.StaffStatistic;
 import com.sws.common.entity.StaffWork;
 import com.sws.common.entity.TypeRateEntity;
 import com.sws.common.statics.SysStatics;
@@ -40,12 +45,14 @@ import com.sws.dao.UserInfoDao;
 import com.sws.model.DeviceInfo;
 import com.sws.model.GroupTree;
 import com.sws.model.ManualRecord;
+import com.sws.model.ParameterInfo;
 import com.sws.model.StaffInfo;
 import com.sws.model.UserInfo;
 import com.sws.model.WashHandLog;
 import com.sws.service.AppNewsService;
 import com.sws.service.DeviceInfoService;
 import com.sws.service.ManualRecordService;
+import com.sws.service.StaffInfoService;
 import com.sws.service.WashHandLogService;
 import com.sys.core.util.bean.Page;
 import com.sys.core.util.cm.ConfigManager;
@@ -68,6 +75,9 @@ public class AppAction extends BaseAction<DeviceInfo>{
     private UserInfoDao userInfoDao;
 	@Autowired
 	private ManualRecordService manualRecordService;
+	
+	@Autowired
+	private StaffInfoService staffInfoService;
 	
 	private Long oneDay = 1*24*3600*1000L;
 	
@@ -137,6 +147,26 @@ public class AppAction extends BaseAction<DeviceInfo>{
 	private String timeStart;
 	private String timeEnd;
 	
+	private String departmentId;
+	
+	private List<String> departmentIds;
+	
+	public List<String> getDepartmentIds() {
+		return departmentIds;
+	}
+
+	public void setDepartmentIds(List<String> departmentIds) {
+		this.departmentIds = departmentIds;
+	}
+
+	public String getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(String departmentId) {
+		this.departmentId = departmentId;
+	}
+
 	/**
 	 * 一定时间段内该科室下的不同人员类别的手卫生次数统计
 	 * @return
@@ -1985,6 +2015,284 @@ public class AppAction extends BaseAction<DeviceInfo>{
 		AllManualResults allManualResults = new AllManualResults(departRate, departCorrect, departExecute, executeMapOccassion, correctMapOccassion, staffExecuteRate, staffCorrectRate);
 		dataMap.put("allResults", allManualResults);
 		return SUCCESS;
+	}
+	
+	/**
+	 * 简化版Web_APP
+	 * @param departmentId
+	 * @param startTime
+	 * @param endTime
+	 */
+	public void getHospitalPerformanceThisWeek() {
+		Date startDate = DateUtils.str2DateByYMDHMS(startTime);
+		Date endDate = DateUtils.str2DateByYMDHMS(endTime);
+		queryEntity.setStartTime(startDate);
+		queryEntity.setEndTime(endDate);
+		if("1".equals(departmentId)) {
+			//返回对象
+			OrganisationStatistic os = new OrganisationStatistic();
+			//规定时间内医院所有的手卫生事件
+			List<WashHandLog> washHandLogList = new ArrayList<WashHandLog>();
+			washHandLogList = washHandLogService.findWashHandLogsByTime(queryEntity);
+			//规定时间内医院的所有手卫生事件的次数
+			int totalTimes = 0;
+			if(washHandLogList != null) {
+				totalTimes = washHandLogList.size();
+			}
+			os.setTotalTimes(totalTimes);
+			//医院名称
+			String name = groupTreeService.getHospitalName();
+			os.setName(name);
+			//type为1 的是人员类别，此处查询出所有的人员类别
+			List<ParameterInfo> parameterList =  parameterInfoDao.findBy("type", 1);
+			List<OrganisationStatistic.RoleTimes> roleTimes = new ArrayList<OrganisationStatistic.RoleTimes>();
+			for(int i = 0, length = parameterList.size(); i < length; i++) {
+				OrganisationStatistic.RoleTimes roTimes = os.new RoleTimes();
+				List<StaffInfo> staffs = staffInfoDao.findStaffIdByCategory(parameterList.get(i).getKey());
+				List<Long> staffIds = new ArrayList<Long>();
+				for(int j=0; j<staffs.size(); j++) {
+					Long id = staffs.get(j).getId();
+					staffIds.add(id);
+				}
+				List<DeviceInfo> deviceInfos = deviceInfoDao.findByStaffId(staffIds);
+				List<String> rfids = new ArrayList<String>();
+				for(int m=0;m<deviceInfos.size();m++) {
+					rfids.add(deviceInfos.get(m).getNo());
+				}
+				int count = 0;
+				for(int j = 0, len = rfids.size(); j < len; j++) {
+					for(int k = 0, le = washHandLogList.size(); k < le; k++) {
+						if(rfids.get(j).equals(washHandLogList.get(k).getRfid())) {
+							count++;
+						}
+					}
+				}
+				roTimes.setRole(parameterList.get(i).getValue());
+				roTimes.setTimes(count);
+				roleTimes.add(roTimes);
+			}
+			os.setRoleTimes(roleTimes);
+			//一周执行次数
+			List<OrganisationStatistic.WeekTimes> weekTimes = new ArrayList<OrganisationStatistic.WeekTimes>();
+			
+			List<Integer> weekCounts = washHandLogService.findNumberByDate(queryEntity);
+			//前七天的日期
+			ArrayList<String> dateList = DateUtils.getPastNDate(7);
+			for(int i = 0; i < 7; i++) {
+				OrganisationStatistic.WeekTimes weTimes = os.new WeekTimes();
+				weTimes.setDay(dateList.get(i));
+				weTimes.setTimes(weekCounts.get(i));
+				weekTimes.add(weTimes);
+			}
+			os.setWeekTimes(weekTimes);
+			JSONObject obj = new JSONObject();
+			obj.put("result", os);
+			writeResponse(obj.toString());
+		} else {
+			queryEntity.setStr1(departmentId);
+			//返回对象
+			OrganisationStatistic os = new OrganisationStatistic();
+			//查询该科室在该时间段内的手卫生数据
+			List<WashHandLog> washHandLogs = washHandLogService.findByTimeAndDepartment(queryEntity);
+			//规定时间内该科室的所有手卫生事件的次数
+			int totalTimes = washHandLogs.size();
+			os.setTotalTimes(totalTimes);
+			//科室名称
+			String name = groupTreeService.getNameById(Long.parseLong(departmentId));
+			os.setName(name);
+			//type为1 的是人员类别，此处查询出所有的人员类别
+			List<ParameterInfo> parameterList =  parameterInfoDao.findBy("type", 1);
+			List<OrganisationStatistic.RoleTimes> roleTimes = new ArrayList<OrganisationStatistic.RoleTimes>();
+			for(int i = 0, length = parameterList.size(); i < length; i++) {
+				OrganisationStatistic.RoleTimes roTimes = os.new RoleTimes();
+				List<StaffInfo> staffs = staffInfoDao.findStaffIdByCategory(parameterList.get(i).getKey());
+				List<Long> staffIds = new ArrayList<Long>();
+				for(int j=0; j<staffs.size(); j++) {
+					Long id = staffs.get(j).getId();
+					staffIds.add(id);
+				}
+				List<DeviceInfo> deviceInfos = deviceInfoDao.findByStaffId(staffIds);
+				List<String> rfids = new ArrayList<String>();
+				for(int m=0;m<deviceInfos.size();m++) {
+					rfids.add(deviceInfos.get(m).getNo());
+				}
+				int count = 0;
+				for(int j = 0, len = rfids.size(); j < len; j++) {
+					for(int k = 0, le = washHandLogs.size(); k < le; k++) {
+						if(rfids.get(j).equals(washHandLogs.get(k).getRfid())) {
+							count++;
+						}
+					}
+				}
+				roTimes.setRole(parameterList.get(i).getValue());
+				roTimes.setTimes(count);
+				roleTimes.add(roTimes);
+			}
+			os.setRoleTimes(roleTimes);
+			//一周执行次数
+			List<OrganisationStatistic.WeekTimes> weekTimes = new ArrayList<OrganisationStatistic.WeekTimes>();
+			OrganisationStatistic.WeekTimes weTimes = os.new WeekTimes();
+			List<Integer> weekCounts = washHandLogService.findNumberByDate(queryEntity);
+			//前七天的日期
+			ArrayList<String> dateList = DateUtils.getPastNDate(7);
+			for(int i = 0; i < 7; i++) {
+				weTimes.setDay(dateList.get(i));
+				weTimes.setTimes(weekCounts.get(i));
+				weekTimes.add(weTimes);
+			}
+			os.setWeekTimes(weekTimes);
+			JSONObject obj = new JSONObject();
+			obj.put("result", os);
+			writeResponse(obj.toString());
+		}
+		
+	}
+	
+	public void getDepartmentCounts() {
+		List<DepartmentStatistic> departmentStatistics = new ArrayList<DepartmentStatistic>();
+		List<GroupTree> groupTrees = groupTreeService.getDepart();
+		for(int i = 0, length = groupTrees.size(); i < length; i++) {
+			DepartmentStatistic departmentStatistic = new DepartmentStatistic();
+			departmentStatistic.setId(groupTrees.get(i).getId());
+			departmentStatistic.setName(groupTrees.get(i).getName());
+			departmentStatistics.add(departmentStatistic);
+		}
+		Date startDate =  DateUtils.str2DateByYMDHMS(startTime);
+		Date endDate = DateUtils.str2DateByYMDHMS(endTime);
+		queryEntity.setStartTime(startDate);
+		queryEntity.setEndTime(endDate);
+		int times = 0;
+		for(int i = 0, length = departmentStatistics.size(); i < length; i++) {
+			queryEntity.setStr1(String.valueOf(departmentStatistics.get(i).getId()));
+			//查询该科室在该时间段内的手卫生数据
+			List<WashHandLog> washHandLogs = washHandLogService.findByTimeAndDepartment(queryEntity);
+			if(washHandLogs != null) {
+				times = washHandLogs.size();
+			}
+			departmentStatistics.get(i).setTimes(times);
+		}
+		Collections.sort(departmentStatistics, new Comparator<DepartmentStatistic>() {
+			@Override
+			public int compare(DepartmentStatistic d1, DepartmentStatistic d2) {
+				return (d2.getTimes() - d1.getTimes());
+			}
+        });
+		for(int i = 0, length = departmentStatistics.size(); i < length; i++) {
+			departmentStatistics.get(i).setRank(i+1);
+		}
+		JSONObject obj = new JSONObject();
+		obj.put("result", departmentStatistics);
+		writeResponse(obj.toString());
+	}
+	
+	public void getStaffCounts() {
+		List<StaffStatistic> staffStatistics = new ArrayList<StaffStatistic>();
+		Date startDate = DateUtils.str2DateByYMDHMS(startTime);
+		Date endDate = DateUtils.str2DateByYMDHMS(endTime);
+		queryEntity.setStartTime(startDate);
+		queryEntity.setEndTime(endDate);
+		List<DeviceInfo> deviceList = deviceInfoService.findAll();
+		Map<String, String> devicePosition = new HashMap<String, String>();
+		for(int i = 0, length = deviceList.size(); i < length; i++) {
+			devicePosition.put(deviceList.get(i).getNo(), deviceList.get(i).getName());
+		}
+		//得到所有的人员类别
+		List<ParameterInfo> parameterList = parameterInfoDao.findBy("type", 1);
+		Map<String, String> parameterMap = new HashMap<String, String>();
+		for(int i = 0, length = parameterList.size(); i < length; i++) {
+			parameterMap.put(parameterList.get(i).getKey(), parameterList.get(i).getValue());
+		}
+		List<GroupTree> groupTrees = groupTreeService.getDepart();
+		for(int i = 0, length = departmentIds.size(); i < length; i++) {
+			String departmenName = "";
+			for(GroupTree gt : groupTrees) {
+				if(gt.getId().equals(Long.parseLong(departmentIds.get(i)))) {
+					departmenName = gt.getName();
+				}
+			}
+			queryEntity.setStr1(departmentIds.get(i));
+			//得到该科室下的所有设备信息
+			List<DeviceInfo> devices = deviceInfoService.findByDepartId(Long.valueOf(departmentIds.get(i)));
+			//得到该科室的所有员工信息
+			List<StaffInfo> staffInfos = staffInfoService.findByGroupId(Long.valueOf(departmentIds.get(i)));
+			//得到该科室下的所有手卫生记录
+			List<WashHandLog> washHandLogs = washHandLogService.findByTimeAndDepartment(queryEntity);
+			Map<String, Map<String, Integer>> mapOuter = new HashMap<String, Map<String,Integer>>();
+			Map<String, Integer> mapInner = new HashMap<String, Integer>();
+			if(washHandLogs == null) {
+				continue;
+			}
+			for(WashHandLog log : washHandLogs) {
+				//washHandLog中的rfid
+				String rfid = log.getRfid();
+				//washHandLog中的deviceNo
+				String deviceNo = log.getDeviceNo();
+				//判断map中该rfid对应的detail是否为空
+				if(mapOuter.get(rfid) != null) {
+					Map<String, Integer> map = mapOuter.get(rfid);
+					if(map.get(deviceNo) != null) {
+						int times = map.get(deviceNo) + 1;
+						map.put(deviceNo, times);
+					} else {
+						map.put(deviceNo, 1);
+					}
+				} else {
+					Map<String, Integer> map = new HashMap<String, Integer>();
+					map.put(deviceNo, 1);
+					mapOuter.put(rfid, map);
+				}
+			}
+			for(int j = 0, len = devices.size(); j < len; j++) {
+				for(String rfid : mapOuter.keySet()) {
+					if(devices.get(j).getNo().equals(rfid)) {
+						Long staffId = devices.get(j).getStaffId();
+						for(int k = 0, l = staffInfos.size(); k < l; k++) {
+							if(staffId.equals(staffInfos.get(k).getId())) {
+								String name = staffInfos.get(k).getName();
+								String role = parameterMap.get(staffInfos.get(k).getCategory());
+								StaffStatistic staffStatistic = new StaffStatistic();
+								staffStatistic.setDepartment(departmenName);
+								staffStatistic.setName(name);
+								staffStatistic.setRole(role);
+								mapInner = mapOuter.get(rfid);
+								int count = 0;
+								for(Integer times : mapInner.values()) {
+									count = count + times;
+								}
+								staffStatistic.setTimes(count);
+								List<StaffStatistic.Detail> details = new ArrayList<StaffStatistic.Detail>();
+								for(String dNo : mapInner.keySet()) {
+									StaffStatistic.Detail detail = staffStatistic.new Detail();
+									if(devicePosition.get(dNo) == null) {
+										detail.setPosition("未添加设备");
+									} else {
+										detail.setPosition(devicePosition.get(dNo));
+									}
+									detail.setTimes(mapInner.get(dNo));
+									details.add(detail);
+								}
+								staffStatistic.setDetail(details);
+								staffStatistics.add(staffStatistic);
+							}
+						}
+					}
+				}
+			}
+		}
+		Collections.sort(staffStatistics, new Comparator<StaffStatistic>() {
+
+			@Override
+			public int compare(StaffStatistic o1, StaffStatistic o2) {
+				return o2.getTimes() - o1.getTimes();
+			}
+			
+		});
+		for(int i = 0, length = staffStatistics.size(); i < length; i++) {
+			staffStatistics.get(i).setRank(i+1);
+		}
+		JSONObject obj = new JSONObject();
+		obj.put("result", staffStatistics);
+		writeResponse(obj.toString());
 	}
 	
 	public Map<String, Object> getDataMap() {  

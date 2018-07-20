@@ -17,5 +17,17 @@ public interface GroupTreeService {
 	public void saveAll(List<GroupTree> list);
 	public List<GroupTree> getUserDepart();
 	public List<String> getManageDeparts();
+	
+	/**
+	 * 得到医院名称（目前的表结构设计只有一家医院，所以不需要返回List<String>）
+	 * @return
+	 */
+	public String getHospitalName();
+	
+	/**
+	 * 根据groupTree的Id得到对应的名字
+	 * @return
+	 */
+	public String getNameById(Long id);
 
 }

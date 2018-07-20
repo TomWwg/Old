@@ -77,5 +77,13 @@ public class DeviceInfoDaoImpl extends HibernateEntityDao<DeviceInfo> implements
 		return deviceInfos;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getRFIDByStaffIds(List<Long> staffIds) {
+		String hql = "select d.no from DeviceInfo d where d.staffId in "+staffIds;
+		List<String> rfids = getHibernateTemplate().find(hql);
+		return rfids;
+	}
+
 
 }

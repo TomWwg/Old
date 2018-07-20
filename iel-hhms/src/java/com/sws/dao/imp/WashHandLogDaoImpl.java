@@ -214,5 +214,18 @@ public class WashHandLogDaoImpl extends HibernateEntityDao<WashHandLog>
 		criteria.add(Restrictions.eq("eventType", "0103"));
 		return findByDetachedCriteria(criteria);
 	}
+
+	@Override
+	public List<WashHandLog> findWashHandLogsByTime(QueryEntity queryEntity) {
+		DetachedCriteria criteria = DetachedCriteria
+				.forClass(WashHandLog.class);
+		if (queryEntity.getStartTime() != null
+				&& queryEntity.getEndTime() != null) {
+			criteria.add(Restrictions.between("createTime",
+					queryEntity.getStartTime(), queryEntity.getEndTime()));
+		}
+		criteria.add(Restrictions.eq("eventType", "0003"));
+		return findByDetachedCriteria(criteria);
+	}
 	
 }

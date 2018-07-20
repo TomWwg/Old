@@ -39,4 +39,11 @@ public interface DeviceInfoService {
 	 * @author wwg
 	 */
 	com.sws.common.entity.GroupTree findByTreeId(Integer id);
+	
+	/**
+	 * 通过category查询对应的rfids
+	 * @param category
+	 * @return
+	 */
+	List<String> getRFIDByCategory(List<Long> staffIds);
 }

@@ -33,4 +33,10 @@ public interface StaffInfoService {
 	 * @return
 	 */
 	String findNameByRfid(String rfid);
+	
+	/**
+	 * 通过GroupId查找该科室下的人员信息
+	 * @return
+	 */
+	List<StaffInfo> findByGroupId(Long groupId);
 }

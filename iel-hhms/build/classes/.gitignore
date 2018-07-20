@@ -1,2 +1,13 @@
+/applicationContext.xml
 /com/
-/controller/
+/constParameter.xml
+/download/
+/errorcode/
+/language/
+/license/
+/log4j.properties
+/spring/
+/struts.properties
+/struts.xml
+/struts2/
+/system.properties

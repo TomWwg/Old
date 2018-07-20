@@ -1,15 +1,32 @@
 package com.sws.common.entity;
 
+import java.util.List;
+
 public class OrganisationStatistic {
 	
+	/**
+	 * 医院名
+	 */
 	private String name;
 	
+	/**
+	 * 手卫生总次数
+	 */
 	private int totalTimes;
 	
-	private RoleTimes roleTimes;
+	/**
+	 * 各个人员类别的手卫生次数
+	 */
+	private List<RoleTimes> roleTimes;
 	
-	private WeekTimes weekTimes;
+	/**
+	 * 一周执行次数变化
+	 */
+	private List<WeekTimes> weekTimes;
 	
+	/**
+	 * 
+	 */
 	public class RoleTimes{
 		
 		private String role;
@@ -72,19 +89,21 @@ public class OrganisationStatistic {
 		this.totalTimes = totalTimes;
 	}
 
-	public RoleTimes getRoleTimes() {
+
+	public List<RoleTimes> getRoleTimes() {
 		return roleTimes;
 	}
 
-	public void setRoleTimes(RoleTimes roleTimes) {
+	public void setRoleTimes(List<RoleTimes> roleTimes) {
 		this.roleTimes = roleTimes;
 	}
 
-	public WeekTimes getWeekTimes() {
+
+	public List<WeekTimes> getWeekTimes() {
 		return weekTimes;
 	}
 
-	public void setWeekTimes(WeekTimes weekTimes) {
+	public void setWeekTimes(List<WeekTimes> weekTimes) {
 		this.weekTimes = weekTimes;
 	}
 

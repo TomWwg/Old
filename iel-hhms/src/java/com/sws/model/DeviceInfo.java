@@ -100,5 +100,12 @@ public class DeviceInfo extends  BaseEntity {
 		this.typeName = typeName;
 	}
 	
-	  
+	@Override
+	public String toString() {
+		return "DeviceInfo [name=" + name + ", no=" + no + ", type=" + type + ", deviceStatus=" + deviceStatus
+				+ ", remark=" + remark + ", groupTree=" + groupTree + ", departId=" + departId + ", roomId=" + roomId
+				+ ", bedId=" + bedId + ", staffId=" + staffId + ", deviceStatusName=" + deviceStatusName + ", showName="
+				+ showName + ", typeName=" + typeName + "]";
+	}
+	
 }

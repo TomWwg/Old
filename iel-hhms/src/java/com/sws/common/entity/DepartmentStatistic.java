@@ -2,11 +2,21 @@ package com.sws.common.entity;
 
 public class DepartmentStatistic {
 	
+	private Long id;
+	
 	private String name;
 	
 	private int times;
 	
 	private int rank;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -34,7 +44,7 @@ public class DepartmentStatistic {
 
 	@Override
 	public String toString() {
-		return "DepartmentStatistic [name=" + name + ", times=" + times + ", rank=" + rank + "]";
+		return "DepartmentStatistic [id=" + id + ", name=" + name + ", times=" + times + ", rank=" + rank + "]";
 	}
 
 }
