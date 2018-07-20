@@ -2050,6 +2050,9 @@ public class AppAction extends BaseAction<DeviceInfo>{
 				OrganisationStatistic.RoleTimes roTimes = os.new RoleTimes();
 				List<StaffInfo> staffs = staffInfoDao.findStaffIdByCategory(parameterList.get(i).getKey());
 				List<Long> staffIds = new ArrayList<Long>();
+				if(staffs == null) {
+					continue;
+				}
 				for(int j=0; j<staffs.size(); j++) {
 					Long id = staffs.get(j).getId();
 					staffIds.add(id);
@@ -2151,6 +2154,7 @@ public class AppAction extends BaseAction<DeviceInfo>{
 	public void getDepartmentCounts() {
 		List<DepartmentStatistic> departmentStatistics = new ArrayList<DepartmentStatistic>();
 		List<GroupTree> groupTrees = groupTreeService.getDepart();
+		System.out.println("groupTrees is: "+groupTrees);
 		for(int i = 0, length = groupTrees.size(); i < length; i++) {
 			DepartmentStatistic departmentStatistic = new DepartmentStatistic();
 			departmentStatistic.setId(groupTrees.get(i).getId());

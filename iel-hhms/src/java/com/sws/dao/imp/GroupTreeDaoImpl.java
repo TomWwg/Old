@@ -20,29 +20,27 @@ public class GroupTreeDaoImpl extends HibernateEntityDao<GroupTree> implements G
     
 	@Override
 	public List<GroupTree> findByTypes(List<Integer> types) {
-		// TODO Auto-generated method stub
 		DetachedCriteria criteria = DetachedCriteria.forClass(GroupTree.class);
 		criteria.add(Restrictions.in("type", types));
 		return findByDetachedCriteria(criteria);
 	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<GroupTree> getDepart() {
-		// TODO Auto-generated method stub
-		DetachedCriteria criteria = DetachedCriteria.forClass(GroupTree.class);
-		criteria.add(Restrictions.ne("id",1L));//不是医院节点
-		criteria.add(Restrictions.eq("type", 0));
-		return findByDetachedCriteria(criteria);
+		String hql = "from GroupTree where type=0 and id!=1";
+		List<GroupTree> groupTrees = getHibernateTemplate().find(hql);
+		return groupTrees;
 	}
+	
 	@Override
 	public List<GroupTree> findByParentIds(List<Long> parentIds) {
-		// TODO Auto-generated method stub
 		DetachedCriteria criteria = DetachedCriteria.forClass(GroupTree.class);
 		criteria.add(Restrictions.in("parentId", parentIds));
 		return findByDetachedCriteria(criteria);
 	}
 	@Override
 	public List<GroupTree> getUserDepart() {
-		// TODO Auto-generated method stub
 		DetachedCriteria criteria = DetachedCriteria.forClass(GroupTree.class);
 		//criteria.add(Restrictions.ne("id",1L));//不是医院节点
 		criteria.add(Restrictions.eq("type", 0));
@@ -50,7 +48,6 @@ public class GroupTreeDaoImpl extends HibernateEntityDao<GroupTree> implements G
 	}
 	@Override
 	public List<String> getManageDeparts() {
-		// TODO Auto-generated method stub
 		List<GroupTree> manageDepartList= new ArrayList<GroupTree>();
 		List<String> manageDeparts=new ArrayList<String>();
 		DetachedCriteria criteria = DetachedCriteria.forClass(GroupTree.class);
@@ -69,8 +66,9 @@ public class GroupTreeDaoImpl extends HibernateEntityDao<GroupTree> implements G
 	@Override
 	public String getHospitalName() {
 		DetachedCriteria criteria = DetachedCriteria.forClass(GroupTree.class);
-		//parentId=0表示是医院
 		criteria.add(Restrictions.eq("parentId", 0L));
+//		String hql = "select name from GroupTree where parentId=0";
+//		String name = getHibernateTemplate().find(hql).toString();
 		String name = findByDetachedCriteria(criteria).get(0).getName();
 		return name;
 	}
