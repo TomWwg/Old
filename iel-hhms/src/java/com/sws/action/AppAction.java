@@ -2066,10 +2066,12 @@ public class AppAction extends BaseAction<DeviceInfo>{
 					rfids.add(deviceInfos.get(m).getNo());
 				}
 				int count = 0;
-				for(int j = 0, len = rfids.size(); j < len; j++) {
-					for(int k = 0, le = washHandLogList.size(); k < le; k++) {
-						if(rfids.get(j).equals(washHandLogList.get(k).getRfid())) {
-							count++;
+				if(washHandLogList != null) {
+					for(int j = 0, len = rfids.size(); j < len; j++) {
+						for(int k = 0, le = washHandLogList.size(); k < le; k++) {
+							if(rfids.get(j).equals(washHandLogList.get(k).getRfid())) {
+								count++;
+							}
 						}
 					}
 				}
@@ -2080,14 +2082,13 @@ public class AppAction extends BaseAction<DeviceInfo>{
 			os.setRoleTimes(roleTimes);
 			//一周执行次数
 			List<OrganisationStatistic.WeekTimes> weekTimes = new ArrayList<OrganisationStatistic.WeekTimes>();
-			
 			List<Integer> weekCounts = washHandLogService.findNumberByDate(queryEntity);
 			//前七天的日期
 			ArrayList<String> dateList = DateUtils.getPastNDate(7);
 			for(int i = 0; i < 7; i++) {
 				OrganisationStatistic.WeekTimes weTimes = os.new WeekTimes();
 				weTimes.setDay(dateList.get(i));
-				weTimes.setTimes(weekCounts.get(i));
+				weTimes.setTimes(weekCounts.get(6-i));
 				weekTimes.add(weTimes);
 			}
 			os.setWeekTimes(weekTimes);
@@ -2132,10 +2133,12 @@ public class AppAction extends BaseAction<DeviceInfo>{
 					rfids.add(deviceInfos.get(m).getNo());
 				}
 				int count = 0;
-				for(int j = 0, len = rfids.size(); j < len; j++) {
-					for(int k = 0, le = washHandLogs.size(); k < le; k++) {
-						if(rfids.get(j).equals(washHandLogs.get(k).getRfid())) {
-							count++;
+				if(washHandLogs != null) {
+					for(int j = 0, len = rfids.size(); j < len; j++) {
+						for(int k = 0, le = washHandLogs.size(); k < le; k++) {
+							if(rfids.get(j).equals(washHandLogs.get(k).getRfid())) {
+								count++;
+							}
 						}
 					}
 				}
@@ -2152,7 +2155,7 @@ public class AppAction extends BaseAction<DeviceInfo>{
 			for(int i = 0; i < 7; i++) {
 				OrganisationStatistic.WeekTimes weTimes = os.new WeekTimes();
 				weTimes.setDay(dateList.get(i));
-				weTimes.setTimes(weekCounts.get(i));
+				weTimes.setTimes(weekCounts.get(6-i));
 				weekTimes.add(weTimes);
 			}
 			os.setWeekTimes(weekTimes);
@@ -2209,7 +2212,12 @@ public class AppAction extends BaseAction<DeviceInfo>{
 		List<DeviceInfo> deviceList = deviceInfoService.findAll();
 		Map<String, String> devicePosition = new HashMap<String, String>();
 		for(int i = 0, length = deviceList.size(); i < length; i++) {
-			devicePosition.put(deviceList.get(i).getNo(), deviceList.get(i).getName());
+			String dp = groupTreeService.getById(deviceList.get(i).getDepartId()).getName();
+			String room = "";
+			if(deviceList.get(i).getRoomId() != null) {
+				room = groupTreeService.getById(deviceList.get(i).getRoomId()).getName();
+			}
+			devicePosition.put(deviceList.get(i).getNo(), dp + "/" + room + "#" + SysStatics.deviceTypeMap.get(deviceList.get(i).getType())+deviceList.get(i).getNo());
 		}
 		//得到所有的人员类别
 		List<ParameterInfo> parameterList = parameterInfoDao.findByType(1);

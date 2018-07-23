@@ -442,7 +442,7 @@ public class WashHandLogServiceImpl implements WashHandLogService {
 			    Calendar calendar = new GregorianCalendar(); 
 			    calendar.setTime(startDate);
 			    //把日期往后增加i天.整数往后推,负数往前移动
-			    calendar.add(calendar.DATE, i);
+			    calendar.add(calendar.DATE, i+1);
 			    Date dateAddOneBefore = calendar.getTime();
 			    calendar.add(calendar.DATE, 1); 
 			    Date dateAddOne = calendar.getTime();
@@ -481,7 +481,7 @@ public class WashHandLogServiceImpl implements WashHandLogService {
 			    Calendar calendar = new GregorianCalendar(); 
 			    calendar.setTime(startDate);
 			    //把日期往后增加i天.整数往后推,负数往前移动
-			    calendar.add(calendar.DATE, i);
+			    calendar.add(calendar.DATE, i+1);
 			    Date dateAddOneBefore = calendar.getTime();
 			    calendar.add(calendar.DATE, 1); 
 			    Date dateAddOne = calendar.getTime();
